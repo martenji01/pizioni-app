@@ -18,7 +18,7 @@ const Login = () => {
   return (
     <div>
       <Button onClick={logIn}>LogIn</Button>
-      <Link to={routes.REGISTER} >Register</Link>
+      <Link to={routes.SLASH + routes.REGISTER} >Register</Link>
     </div>
   )
 }
