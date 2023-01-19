@@ -1,0 +1,9 @@
+{
+    "key": "chiave",
+    "search": "cerca",
+    "filter":  "filtra",
+    "logout": "disconnetti",
+    "login": "connetti",
+    "unknown": "sconosciuto"
+  }
+  
