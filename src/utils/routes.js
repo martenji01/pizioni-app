@@ -1,4 +1,5 @@
 export const routes = {
+    SLASH: "/",
     HOME: "home",
     RULES: "rules",
     LOGIN: "login",

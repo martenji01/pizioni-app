@@ -1,5 +1,5 @@
 import './i18n/index'
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
 import Layout from "./pages/Layout"
 import Home from "./pages/Home"
 import NoPage from "./pages/NoPage"
@@ -10,18 +10,53 @@ import Rules from "./pages/Rules"
 import Game from "./pages/Game"
 import LeaderBoards from "./pages/LeaderBoards"
 import {routes} from "./utils/routes"
+import { useNavigate } from "react-router-dom";
+import {useSelector} from "react-redux"
+import {userSelectors} from "./state/user"
+import { useEffect, useState } from 'react'
+import "./scss/index.scss"
 
-const Router = () =>{
-return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/"
+const UnloggedRoutes = () =>{
+  const location = useLocation()
+  const navigate = useNavigate()
+  console.log({routes: "unlogged"})
+
+  useEffect(()=>{
+    console.log({location})
+    if(location.pathname===routes.SLASH)
+      navigate(routes.LOGIN)
+  }, [location])
+  
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path={routes.LOGIN} element={<Login />} />
+        <Route path={routes.REGISTER} element={<Register />} />
+        <Route path="*" element={<NoPage />} />
+      </Route>
+  </Routes>
+  )
+}
+
+const LoggedRoutes = () =>{
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  console.log({routes: "logged"})
+
+  useEffect(()=>{
+    console.log({location})
+    if(location.pathname===routes.SLASH || location.pathname===routes.SLASH + routes.LOGIN)
+      navigate(routes.HOME)
+  }, [location])
+
+  
+  return (
+    <Routes>
+        <Route
           element={<Layout />}
-          action={({ params }) => {}}
         >
-          <Route index path={routes.HOME} element={<Home />} />
-          <Route path={routes.LOGIN} element={<Login />} />
-          <Route path={routes.REGISTER} element={<Register />} />
+          <Route path={routes.HOME} element={<Home />} />
           <Route path={routes.RULES} element={<Rules />} />
           <Route path={routes.LEADERBOARDS} element={<LeaderBoards />} />
           <Route path={routes.PLAY} element={<Play />} />
@@ -29,15 +64,39 @@ return (
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
-    </BrowserRouter>
-)
+  )
 }
+
+const Router = () =>{
+  const userToken = useSelector(userSelectors.token)
+  const [isLogged, setIsLogged] = useState(false)
+  
+  useEffect(()=>{
+    if(userToken)
+      setIsLogged(true)
+    else
+      setIsLogged(false)
+  }, [userToken])
+
+  useEffect(()=>{
+    console.log({isLogged})
+  }, [isLogged])
+  return (
+      <BrowserRouter>
+        {isLogged ? <LoggedRoutes/> : <UnloggedRoutes />}
+      </BrowserRouter>
+  )
+}
+
+
 const App = () => {
-return (
-  <div className="App">
-      <Router />
-  </div>
-);
+  return (
+    <div
+    className="App"
+    >
+        <Router />
+    </div>
+  )
 }
 
 
