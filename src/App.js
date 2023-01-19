@@ -15,6 +15,7 @@ import {useSelector} from "react-redux"
 import {userSelectors} from "./state/user"
 import { useEffect, useState } from 'react'
 import "./scss/index.scss"
+import Profile from './pages/Profile'
 
 const UnloggedRoutes = () =>{
   const location = useLocation()
@@ -57,6 +58,7 @@ const LoggedRoutes = () =>{
           element={<Layout />}
         >
           <Route path={routes.HOME} element={<Home />} />
+          <Route path={routes.PROFILE} element={<Profile />} />
           <Route path={routes.RULES} element={<Rules />} />
           <Route path={routes.LEADERBOARDS} element={<LeaderBoards />} />
           <Route path={routes.PLAY} element={<Play />} />
