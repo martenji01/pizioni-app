@@ -3,9 +3,13 @@ export const routes = {
     HOME: "home",
     RULES: "rules",
     LOGIN: "login",
+    LOGOUT: "logout",
     REGISTER: "register",
     LEADERBOARDS: "leaderboards",
     PLAY: "play",
-    GAME: "game"
-
+    PROFILE: "profile",
+    GAME: "game",
+    SETTINGS: "settings"
 }
+
+export const menuRoutes = [ routes.RULES, routes.LEADERBOARDS, routes.PLAY]
